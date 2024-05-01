@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.Login_Register" parent="Theme.Material3.DayNight">
+    <style name="Theme.Login_Register" parent="Theme.Material3.DayNight">
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
         <item name="colorPrimary">@color/purple_500</item>
@@ -12,7 +12,7 @@
         <item name="colorOnSecondary">@color/colorBlack</item>
     </style>
 
-    <style name="Base.Theme.Login_Register.NoActionBar" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Theme.Login_Register.NoActionBar" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
         <item name="colorPrimary">@color/purple_500</item>
