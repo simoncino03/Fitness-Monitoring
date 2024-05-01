@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.login_layout)
+        setContentView(R.layout.activity_login)
         /* binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
