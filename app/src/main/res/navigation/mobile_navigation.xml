@@ -12,14 +12,24 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.fitnessbodybuilding.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_esercizi"
+        android:name="com.example.fitnessbodybuilding.ui.esercizi.EserciziFragment"
+        android:label="@string/menu_esercizi"
+        tools:layout="@layout/fragment_esercizi" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.fitnessbodybuilding.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_scheda"
+        android:name="com.example.fitnessbodybuilding.ui.schedaEs.schedaEsFragment"
+        android:label="@string/menu_scheda"
+        tools:layout="@layout/fragment_scheda" />
+    <fragment
+        android:id="@+id/nav_cal"
+        android:name="com.example.fitnessbodybuilding.ui.calendario.CalendarioFragment"
+        android:label="@string/menu_calendario"
+        tools:layout="@layout/fragment_calendario" />
+    <fragment
+        android:id="@+id/nav_timer"
+        android:name="com.example.fitnessbodybuilding.ui.timer.TimerFragment"
+        android:label="@string/menu_timer"
+        tools:layout="@layout/fragment_timer" />
 </navigation>

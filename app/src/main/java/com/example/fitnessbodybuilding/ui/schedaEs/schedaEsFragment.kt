@@ -1,4 +1,4 @@
-package com.example.fitnessbodybuilding.ui.slideshow
+package com.example.fitnessbodybuilding.ui.schedaEs
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.fitnessbodybuilding.databinding.FragmentSlideshowBinding
+import com.example.fitnessbodybuilding.databinding.FragmentSchedaBinding
 
-class SlideshowFragment : Fragment() {
+class schedaEsFragment : Fragment() {
 
-    private var _binding: FragmentSlideshowBinding? = null
+    private var _binding: FragmentSchedaBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -22,14 +22,14 @@ class SlideshowFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val slideshowViewModel =
-            ViewModelProvider(this).get(SlideshowViewModel::class.java)
+        val schedaEsViewModel =
+            ViewModelProvider(this).get(SchedaEsViewModel::class.java)
 
-        _binding = FragmentSlideshowBinding.inflate(inflater, container, false)
+        _binding = FragmentSchedaBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val textView: TextView = binding.textSlideshow
-        slideshowViewModel.text.observe(viewLifecycleOwner) {
+        schedaEsViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
         return root

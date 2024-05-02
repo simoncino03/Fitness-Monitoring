@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/back_login"
-    tools:context=".MainActivity">
+    tools:context=".ui.ClassiEsecutive.MenuActivity">
+
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="180dp"
@@ -23,9 +24,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="28dp"
         android:layout_marginEnd="24dp"
-        android:drawableLeft="@drawable/ic_email"
         android:ems="10"
         android:hint="E-Mail"
         android:inputType="textEmailAddress"
@@ -34,8 +34,9 @@
         android:paddingEnd="8dp"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_login" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
     <Button
         android:id="@+id/btnLogin"
@@ -57,7 +58,6 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
-        android:drawableLeft="@drawable/ic_security"
         android:ems="10"
         android:hint="PassWord"
         android:inputType="textPassword"
@@ -97,8 +97,8 @@
 
     <Button
         android:id="@+id/btnGoogle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="171dp"
+        android:layout_height="45dp"
         android:layout_marginStart="25dp"
         android:layout_marginTop="60dp"
         android:layout_marginBottom="10dp"
@@ -110,8 +110,8 @@
 
     <Button
         android:id="@+id/btnFacebook"
-        android:layout_width="152dp"
-        android:layout_height="50dp"
+        android:layout_width="171dp"
+        android:layout_height="48dp"
         android:layout_marginTop="60dp"
         android:layout_marginEnd="25dp"
         android:layout_marginBottom="10dp"
@@ -121,17 +121,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/noAccount" />
 
-    <TextView
-        android:id="@+id/tv_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="Login"
-        android:textColor="#FFFFFF"
-        android:textSize="48sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="329dp"
+        android:layout_height="78dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="40dp"
+        app:layout_constraintBottom_toTopOf="@+id/et_email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        app:layout_constraintVertical_bias="0.072" />
+        app:srcCompat="@drawable/_60_f_494019109_zjlujri5eswxa0vojmuhlrsbzwsp0g1e" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,13 +1,13 @@
-package com.example.fitnessbodybuilding.ui.slideshow
+package com.example.fitnessbodybuilding.ui.timer
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class SlideshowViewModel : ViewModel() {
+class TimerViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is slideshow Fragment"
+        value = "Questo è il frammento del timer"
     }
     val text: LiveData<String> = _text
 }

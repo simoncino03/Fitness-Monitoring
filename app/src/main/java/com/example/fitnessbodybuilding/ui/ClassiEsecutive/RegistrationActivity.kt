@@ -1,15 +1,15 @@
-package com.example.fitnessbodybuilding.ui
+package com.example.fitnessbodybuilding.ui.ClassiEsecutive
 
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.fitnessbodybuilding.R
 import android.app.DatePickerDialog
+import android.content.Intent
+import android.widget.Button
 import android.widget.DatePicker
+import android.widget.TextView
 import java.util.*
 
 class RegistrationActivity : AppCompatActivity() {
@@ -19,7 +19,24 @@ class RegistrationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registration)
         editTextDate = findViewById(R.id.editTextText3)
+        val hoAcc=findViewById<TextView>(R.id.hoAcc)
+        val btnReg=findViewById<Button>(R.id.btnReg)
+        hoAcc.setOnClickListener{onClick(it)}
+        btnReg.setOnClickListener{onClick(it)}
     }
+
+    fun onClick(v:View)
+    {
+        if(v.id==R.id.hoAcc)
+        {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }else if(v.id==R.id.btnReg){
+            val intent = Intent(this, MenuActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
     fun showDatePickerDialog(v: View) {
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
