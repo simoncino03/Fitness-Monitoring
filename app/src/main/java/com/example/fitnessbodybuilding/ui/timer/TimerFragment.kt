@@ -109,7 +109,6 @@ class TimerFragment : Fragment() {
         val minutes = (timeLeftInMillis / 1000) / 60
         val seconds = (timeLeftInMillis / 1000) % 60
         val newPartialTime = String.format("%02d:%02d", minutes, seconds)
-
         // Aggiungi il nuovo tempo parziale alla coda
         partialTimesQueue.offer(newPartialTime)
 
@@ -117,16 +116,8 @@ class TimerFragment : Fragment() {
         if (partialTimesQueue.size > 3) {
             partialTimesQueue.poll()
         }
-
-        // Inverti l'ordine dei parziali nella coda
-        val reversedPartials = ArrayDeque<String>()
-        reversedPartials.addAll(partialTimesQueue.reversed())
-        partialTimesQueue.clear()
-        partialTimesQueue.addAll(reversedPartials)
-
         updatePartialList()
     }
-
     private fun removePartials() {
         // Rimuovi tutti i parziali dalla lista
         partialTimesQueue.clear()
@@ -137,8 +128,16 @@ class TimerFragment : Fragment() {
     private fun updatePartialList() {
         // Svuota l'adapter prima di aggiungere i tempi parziali
         partialTimesAdapter.clear()
+
+        // Inverti l'ordine dei tempi parziali nella coda
+        val reversedPartials = ArrayDeque<String>()
+        reversedPartials.addAll(partialTimesQueue.reversed())
+
         // Aggiungi i tempi parziali dalla coda all'adapter
-        partialTimesQueue.forEach { partialTimesAdapter.add(it) }
+        reversedPartials.forEach { partialTimesAdapter.add(it) }
+
+        // Aggiorna la lista
+        partialTimesAdapter.notifyDataSetChanged()
     }
 
     @SuppressLint("MissingInflatedId")
