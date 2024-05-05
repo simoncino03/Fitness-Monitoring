@@ -17,29 +17,22 @@ class CalendarioFragment : Fragment() {
     private lateinit var layout: LinearLayout
     private lateinit var text: TextView
     private lateinit var cal: CalendarView
+    private lateinit var sfondoTot:LinearLayout
 
-    class CalendarioFragment : Fragment() {
-
-        private lateinit var layout: LinearLayout
-        private lateinit var text: TextView
-        private lateinit var cal: CalendarView
-        private lateinit var sfondoTot:LinearLayout
-
-        override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-        ): View? {
-            val view = inflater.inflate(R.layout.fragment_calendario, container, false)
-            sfondoTot=view.findViewById<LinearLayout>(R.id.sfondo)
-            layout = view.findViewById(R.id.cal)
-            text = view.findViewById(R.id.testo)
-            cal = view.findViewById(R.id.calend)
-           /* cal.setOnDateChangeListener { calendarView, year, month, dayOfMonth ->
-                val intent = Intent(requireContext(), PaginaGiornaliera::class.java)
-                startActivity(intent)
-            }*/
-            return view
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_calendario, container, false)
+        sfondoTot=view.findViewById(R.id.sfondo)
+        layout = view.findViewById(R.id.cal)
+        text = view.findViewById(R.id.testo)
+        cal = view.findViewById(R.id.calend)
+        cal.setOnDateChangeListener { _, year, month, dayOfMonth ->
+            // Azione da eseguire quando la data viene modificata
+            // In questo esempio, l'azione è vuota
         }
+        return view
     }
 }
