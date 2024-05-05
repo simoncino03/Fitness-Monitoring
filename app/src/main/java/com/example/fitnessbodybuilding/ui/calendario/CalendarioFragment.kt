@@ -1,42 +1,45 @@
 package com.example.fitnessbodybuilding.ui.calendario
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CalendarView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import com.example.fitnessbodybuilding.databinding.FragmentCalendarioBinding
+import com.example.fitnessbodybuilding.R
+import com.example.fitnessbodybuilding.ui.ClassiEsecutive.MenuActivity
 
 class CalendarioFragment : Fragment() {
 
-    private var _binding: FragmentCalendarioBinding? = null
+    private lateinit var layout: LinearLayout
+    private lateinit var text: TextView
+    private lateinit var cal: CalendarView
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    class CalendarioFragment : Fragment() {
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val calendarioViewModel =
-            ViewModelProvider(this).get(CalendarioViewModel::class.java)
+        private lateinit var layout: LinearLayout
+        private lateinit var text: TextView
+        private lateinit var cal: CalendarView
+        private lateinit var sfondoTot:LinearLayout
 
-        _binding = FragmentCalendarioBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
-        val textView: TextView = binding.textGallery
-        calendarioViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        override fun onCreateView(
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
+        ): View? {
+            val view = inflater.inflate(R.layout.fragment_calendario, container, false)
+            sfondoTot=view.findViewById<LinearLayout>(R.id.sfondo)
+            layout = view.findViewById(R.id.cal)
+            text = view.findViewById(R.id.testo)
+            cal = view.findViewById(R.id.calend)
+           /* cal.setOnDateChangeListener { calendarView, year, month, dayOfMonth ->
+                val intent = Intent(requireContext(), PaginaGiornaliera::class.java)
+                startActivity(intent)
+            }*/
+            return view
         }
-        return root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

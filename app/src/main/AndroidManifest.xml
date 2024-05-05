@@ -8,26 +8,25 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.NavigationBar"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:theme="@style/Theme.NavigationBar"
         tools:targetApi="31">
         <activity
-            android:theme="@style/Theme.Login_Register.NoActionBar"
+            android:name=".ui.calendario.PaginaGiornaliera"
+            android:exported="false" />
+        <activity
             android:name=".ui.ClassiEsecutive.RegistrationActivity"
-            android:exported="true">
-        </activity>
-
+            android:exported="true"
+            android:theme="@style/Theme.Login_Register.NoActionBar"></activity>
         <activity
-            android:theme="@style/Theme.NavigationBar.NoActionBar"
             android:name=".ui.ClassiEsecutive.MenuActivity"
-            android:exported="true">
-        </activity>
-
+            android:exported="true"
+            android:theme="@style/Theme.NavigationBar.NoActionBar"></activity>
         <activity
-            android:theme="@style/Theme.Login_Register.NoActionBar"
             android:name=".ui.ClassiEsecutive.LoginActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.Login_Register.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
