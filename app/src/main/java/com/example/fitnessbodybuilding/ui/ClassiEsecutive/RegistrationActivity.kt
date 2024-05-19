@@ -1,5 +1,6 @@
 package com.example.fitnessbodybuilding.ui.ClassiEsecutive
 
+
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
@@ -7,23 +8,41 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.fitnessbodybuilding.R
 import android.app.DatePickerDialog
 import android.content.Intent
+import android.os.NetworkOnMainThreadException
 import android.widget.Button
 import android.widget.DatePicker
 import android.widget.TextView
+import android.widget.Toast
+import androidx.annotation.NonNull
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
+import com.google.firebase.FirebaseApp
+import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
+import org.w3c.dom.Text
 import java.util.*
+
 
 class RegistrationActivity : AppCompatActivity() {
     private lateinit var editTextDate: EditText
-
+    private lateinit var auth:FirebaseAuth
+    private lateinit var nome: String
+    private lateinit var cognome:String
+    private lateinit var email:String
+    private lateinit var pass:String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registration)
         editTextDate = findViewById(R.id.editTextText3)
         val hoAcc=findViewById<TextView>(R.id.hoAcc)
         val btnReg=findViewById<Button>(R.id.btnReg)
+        auth=FirebaseAuth.getInstance()
         hoAcc.setOnClickListener{onClick(it)}
         btnReg.setOnClickListener{onClick(it)}
+
+
     }
+
 
     fun onClick(v:View)
     {
@@ -32,16 +51,34 @@ class RegistrationActivity : AppCompatActivity() {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }else if(v.id==R.id.btnReg){
-            val intent = Intent(this, MenuActivity::class.java)
-            startActivity(intent)
+            nome= findViewById<TextView>(R.id.name).text.toString()
+            cognome=findViewById<TextView>(R.id.surname).text.toString()
+            email=findViewById<TextView>(R.id.emailText).text.toString()
+            pass=findViewById<TextView>(R.id.passText).text.toString()
+            registerUser(email,pass)
         }
     }
+
+
+    private fun registerUser(email: String, pass: String) {
+        auth.createUserWithEmailAndPassword(email, pass)
+            .addOnCompleteListener(this) { task:Task<AuthResult> ->
+                if (task.isSuccessful) {
+                    val intent = Intent(this, MenuActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(this, "Registrazione Fallita", Toast.LENGTH_SHORT).show()
+                }
+            }
+    }
+
 
     fun showDatePickerDialog(v: View) {
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
+
 
         val datePickerDialog = DatePickerDialog(this,
             DatePickerDialog.OnDateSetListener { view: DatePicker?, year: Int, month: Int, dayOfMonth: Int ->
@@ -52,3 +89,4 @@ class RegistrationActivity : AppCompatActivity() {
         datePickerDialog.show()
     }
 }
+

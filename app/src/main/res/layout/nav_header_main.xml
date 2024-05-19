@@ -14,22 +14,24 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="93dp"
-        android:layout_height="77dp"
+        android:layout_width="110dp"
+        android:layout_height="78dp"
         android:contentDescription="@string/nav_header_desc"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         app:srcCompat="@drawable/monitoring" />
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="341dp"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="@string/nav_header_title"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:text="Fitness e Monitoring"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="25dp" />
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/nav_header_subtitle" />
+        android:id="@+id/textView2"
+        android:layout_width="367dp"
+        android:layout_height="34dp"
+        android:text="Created by Varotti Simone and Pistori Antioco" />
+
 </LinearLayout>
