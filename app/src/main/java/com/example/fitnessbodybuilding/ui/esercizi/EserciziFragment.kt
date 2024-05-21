@@ -1,42 +1,57 @@
 package com.example.fitnessbodybuilding.ui.esercizi
-
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.ImageView
+import android.widget.Spinner
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import com.example.fitnessbodybuilding.databinding.FragmentEserciziBinding
+import com.example.fitnessbodybuilding.R
 
 class EserciziFragment : Fragment() {
 
-    private var _binding: FragmentEserciziBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    private lateinit var exerciseSpinner: Spinner
+    private lateinit var exerciseImage: ImageView
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        val eserciziViewModel =
-            ViewModelProvider(this).get(EserciziViewModel::class.java)
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_exercise, container, false)
 
-        _binding = FragmentEserciziBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        exerciseSpinner = view.findViewById(R.id.exerciseSpinner)
+        exerciseImage = view.findViewById(R.id.exerciseImage)
 
-        val textView: TextView = binding.textGallery
-        eserciziViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        // Popoliamo lo Spinner con le opzioni degli esercizi
+        ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.exercise_options,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            exerciseSpinner.adapter = adapter
         }
-        return root
-    }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        // Impostiamo un listener per lo Spinner per gestire la selezione dell'utente
+        exerciseSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                // Quando un elemento è selezionato, mostriamo l'immagine corrispondente
+                when (position) {
+                    0 -> exerciseImage.setImageResource(R.drawable.exercise_image_1)
+                    1 -> exerciseImage.setImageResource(R.drawable.exercise_image_3)
+                    2 -> exerciseImage.setImageResource(R.drawable.exercise_image_2)
+                    // Aggiungi casi per altri esercizi
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Gestione caso in cui non è stato selezionato nulla
+            }
+        }
+
+        return view
     }
 }
