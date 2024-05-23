@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "708107387099",
+    "project_id": "fitness-monitoring-ea5df",
+    "storage_bucket": "fitness-monitoring-ea5df.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:708107387099:android:0a56303cf1959d83dc0cfe",
+        "android_client_info": {
+          "package_name": "com.example.fitnessbodybuilding"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "708107387099-atset25nhgv6citin87tsv0qrd3llp1v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fitnessbodybuilding",
+            "certificate_hash": "fb7bd41113863b2518e1bedc81a0c38220fa673b"
+          }
+        },
+        {
+          "client_id": "708107387099-iht5pjdmuii0t6bosk5um4j2jkusd3l3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAG6l3_scgjO9FXPVjLo3eC5dl3oerD6LE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "708107387099-iht5pjdmuii0t6bosk5um4j2jkusd3l3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

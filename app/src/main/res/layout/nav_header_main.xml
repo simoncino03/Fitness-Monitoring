@@ -14,8 +14,8 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="110dp"
-        android:layout_height="78dp"
+        android:layout_width="90dp"
+        android:layout_height="60dp"
         android:contentDescription="@string/nav_header_desc"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         app:srcCompat="@drawable/monitoring" />
@@ -26,12 +26,13 @@
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="Fitness e Monitoring"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="25dp" />
+        android:textSize="18dp" />
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="367dp"
+        android:layout_width="217dp"
         android:layout_height="34dp"
-        android:text="Created by Varotti Simone and Pistori Antioco" />
+        android:text="Created by Varotti Simone and Pistori Antioco"
+        android:textSize="14dp" />
 
 </LinearLayout>

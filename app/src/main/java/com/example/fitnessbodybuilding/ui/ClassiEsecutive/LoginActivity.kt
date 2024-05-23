@@ -15,9 +15,13 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var email:String
     private lateinit var pass:String
+    private var emailCorr: Boolean=false
+    private var passCorr: Boolean=false
+
     override  fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        auth = FirebaseAuth.getInstance()
         val btn=findViewById<Button>(R.id.btnLogin)
         val noAcc=findViewById<TextView>(R.id.noAccount)
         btn.setOnClickListener{onClick(it)}
@@ -29,7 +33,24 @@ class LoginActivity : AppCompatActivity() {
         {
             email=findViewById<TextView>(R.id.et_email).text.toString()
             pass=findViewById<TextView>(R.id.et_pass).text.toString()
-            signIn(email,pass)
+            if(email.isEmpty())
+            {
+                findViewById<TextView>(R.id.emailText).setError("Il campo non può essere vuoto")
+            }else if(email.contains("@"))
+            {
+                emailCorr=true
+            }else{
+                findViewById<TextView>(R.id.et_email).setError("Inserire formato corretto di email")
+
+            }
+            if(pass.isEmpty())
+            {
+                findViewById<TextView>(R.id.et_pass).setError("Inserire formato corretto di email")
+            }else{passCorr=true}
+            if((emailCorr)&&(passCorr))
+            {
+                signIn(email, pass)
+            }
         }else if(v.id==R.id.noAccount){
             val intent = Intent(this, RegistrationActivity::class.java)
             startActivity(intent)
