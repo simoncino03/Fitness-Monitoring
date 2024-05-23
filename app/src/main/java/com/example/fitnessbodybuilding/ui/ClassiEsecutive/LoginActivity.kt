@@ -65,7 +65,7 @@ class LoginActivity : AppCompatActivity() {
                     val intent = Intent(this, MenuActivity::class.java)
                     startActivity(intent)
                 } else {
-                    Toast.makeText(this, "Login Non Riuscito", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Login Non Riuscito..", Toast.LENGTH_SHORT).show()
 
                 }
             }
