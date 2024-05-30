@@ -8,10 +8,15 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Spinner
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.fitnessbodybuilding.R
+import com.google.common.base.Objects
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
+
+private fun <K, V> HashMap<K, V>.put(key: String, value: V) {
+
+}
 
 class EserciziFragment : Fragment() {
 
@@ -19,7 +24,6 @@ class EserciziFragment : Fragment() {
     private lateinit var exerciseImage: ImageView
     private lateinit var addExerciseButton: Button
     private lateinit var firestore: FirebaseFirestore
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -66,6 +70,7 @@ class EserciziFragment : Fragment() {
                 2 -> R.drawable.exercise_image_2 // Immagine di default
                 else -> {}
             }
+
             addExerciseToFirestore(selectedExercise, selectedImageRes)
         }
 
@@ -74,21 +79,11 @@ class EserciziFragment : Fragment() {
 
     private fun addExerciseToFirestore(exercise: String, imageRes: Any) {
         // Crea un mappa con i dati da inserire
-        val exerciseData = hashMapOf(
-            "immagine" to imageRes,
-            "numEs" to exercise
-        )
+        val map = java.util.HashMap<String , Any>()
+        map.put("exercise", exercise);
+        map.put("imagine", imageRes)
 
-        // Aggiungi i dati al documento "esercizi" nella raccolta "Fitness"
-        firestore.collection("Fitness")
-            .document("Scheda")
-            .set(exerciseData)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Toast.makeText(requireContext(), "Esercizio aggiunto con successo", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(requireContext(), "Errore durante l'aggiunta dell'esercizio", Toast.LENGTH_SHORT).show()
-                }
+        FirebaseDatabase.getInstance().getReference().child("Scheda").push().child("esercizi").setValue(exercise)
+        FirebaseDatabase.getInstance().getReference().child("Scheda").push().child("immagini").setValue(imageRes)
             }
     }
-}

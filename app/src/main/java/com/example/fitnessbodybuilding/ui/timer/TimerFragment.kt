@@ -148,7 +148,7 @@ class TimerFragment : Fragment() {
         val secondPicker = view.findViewById<NumberPicker>(R.id.secondPicker)
 
         minutePicker.minValue = 0
-        minutePicker.maxValue = 59
+        minutePicker.maxValue   = 59
         minutePicker.value = (lastSelectedTimeInMillis / 1000 / 60).toInt()
 
         secondPicker.minValue = 0

@@ -10,21 +10,24 @@
         android:id="@+id/textViewNumeroEsercizi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="256dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="216dp"
         android:text="Numero di esercizi:"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="129dp"
-        android:layout_marginEnd="130dp"
+    <ListView
+        android:layout_width="341dp"
+        android:layout_height="656dp"
+        android:layout_marginStart="41dp"
+        android:layout_marginEnd="29dp"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewNumeroEsercizi"
-        tools:src="@tools:sample/avatars" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewNumeroEsercizi" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
