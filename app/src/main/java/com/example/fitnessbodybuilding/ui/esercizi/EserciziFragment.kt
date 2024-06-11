@@ -1,4 +1,7 @@
 package com.example.fitnessbodybuilding.ui.esercizi
+
+
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,20 +13,18 @@ import android.widget.ImageView
 import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import com.example.fitnessbodybuilding.R
-import com.google.common.base.Objects
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.firestore.FirebaseFirestore
-
-private fun <K, V> HashMap<K, V>.put(key: String, value: V) {
-
-}
 
 class EserciziFragment : Fragment() {
 
     private lateinit var exerciseSpinner: Spinner
     private lateinit var exerciseImage: ImageView
     private lateinit var addExerciseButton: Button
-    private lateinit var firestore: FirebaseFirestore
+    private lateinit var dataclass: DataClass
+    private lateinit var lista: ArrayList<DataClass>
+    private lateinit var database: DatabaseReference
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,7 +34,9 @@ class EserciziFragment : Fragment() {
         exerciseSpinner = view.findViewById(R.id.exerciseSpinner)
         exerciseImage = view.findViewById(R.id.exerciseImage)
         addExerciseButton = view.findViewById(R.id.button)
-        firestore = FirebaseFirestore.getInstance()
+        database = FirebaseDatabase.getInstance().getReference("Scheda").child("esercizi")
+        lista = arrayListOf()
+
         // Popoliamo lo Spinner con le opzioni degli esercizi
         ArrayAdapter.createFromResource(
             requireContext(),
@@ -46,7 +49,12 @@ class EserciziFragment : Fragment() {
 
         // Impostiamo un listener per lo Spinner per gestire la selezione dell'utente
         exerciseSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 // Quando un elemento è selezionato, mostriamo l'immagine corrispondente
                 when (position) {
                     0 -> exerciseImage.setImageResource(R.drawable.exercise_image_1)
@@ -61,29 +69,38 @@ class EserciziFragment : Fragment() {
             }
         }
 
-        // Listener per il bottone per aggiungere esercizi a Firestore
+        // Listener per il bottone per aggiungere esercizi a Firebase
         addExerciseButton.setOnClickListener {
             val selectedExercise = exerciseSpinner.selectedItem.toString()
-            val selectedImageRes = when (exerciseSpinner.selectedItemPosition) {
-                0 -> R.drawable.exercise_image_1
-                1 -> R.drawable.exercise_image_3
-                2 -> R.drawable.exercise_image_2 // Immagine di default
-                else -> {}
-            }
 
-            addExerciseToFirestore(selectedExercise, selectedImageRes)
+            // Controlla se l'esercizio è già presente nella lista
+            if (!isExerciseAlreadyAdded(selectedExercise)) {
+                dataclass = DataClass(selectedExercise)
+                lista.add(dataclass)
+                addExerciseToFirebase()
+            }
         }
 
         return view
     }
 
-    private fun addExerciseToFirestore(exercise: String, imageRes: Any) {
-        // Crea un mappa con i dati da inserire
-        val map = java.util.HashMap<String , Any>()
-        map.put("exercise", exercise);
-        map.put("imagine", imageRes)
-
-        FirebaseDatabase.getInstance().getReference().child("Scheda").push().child("esercizi").setValue(exercise)
-        FirebaseDatabase.getInstance().getReference().child("Scheda").push().child("immagini").setValue(imageRes)
+    private fun isExerciseAlreadyAdded(exercise: String): Boolean {
+        for (item in lista) {
+            if (item.getDataTitle() == exercise) {
+                return true
             }
+        }
+        return false
     }
+
+    private fun addExerciseToFirebase() {
+        // Aggiungi la lista sotto la chiave "esercizi" nel nodo "Scheda"
+        database.setValue(lista).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                println("Lista aggiunta con successo.")
+            } else {
+                println("Errore durante l'aggiunta della lista: ${task.exception}")
+            }
+        }
+    }
+}
