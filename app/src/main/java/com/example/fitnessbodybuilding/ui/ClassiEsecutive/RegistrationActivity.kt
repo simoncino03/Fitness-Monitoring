@@ -1,14 +1,17 @@
 package com.example.fitnessbodybuilding.ui.ClassiEsecutive
 
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.example.fitnessbodybuilding.R
 import android.app.DatePickerDialog
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.NetworkOnMainThreadException
+import android.util.Log
 import android.widget.Button
 import android.widget.DatePicker
 import android.widget.TextView
@@ -20,19 +23,21 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import org.w3c.dom.Text
 import java.util.*
 
 
 class RegistrationActivity : AppCompatActivity() {
     private lateinit var editTextDate: EditText
-    private lateinit var auth:FirebaseAuth
     private lateinit var nome: String
     private lateinit var cognome:String
     private lateinit var emText:TextView
     private lateinit var email:String
     private lateinit var pass:String
     private lateinit var data:String
+    //private lateinit var auth: FirebaseAuth
     private var nomCor:Boolean=false
     private var cognomCor:Boolean=false
     private var emailCorr:Boolean=false
@@ -44,7 +49,7 @@ class RegistrationActivity : AppCompatActivity() {
         editTextDate = findViewById(R.id.editTextText3)
         val hoAcc=findViewById<TextView>(R.id.hoAcc)
         val btnReg=findViewById<Button>(R.id.btnReg)
-        auth=FirebaseAuth.getInstance()
+        //auth = FirebaseAuth.getInstance()
         hoAcc.setOnClickListener{onClick(it)}
         btnReg.setOnClickListener{onClick(it)}
 
@@ -100,13 +105,30 @@ class RegistrationActivity : AppCompatActivity() {
             }
             if((nomCor)&&(cognomCor)&&(dataCorr)&&(emailCorr)&&(passCorr))
             {
-                registerUser(email, pass)
+                //registerUser(email, pass)
+                val user= hashMapOf(
+                    "cognome" to cognome,
+                    "dataNascita" to data,
+                    "email" to email,
+                    "nome" to nome,
+                    "pass" to pass,
+                )
+                val db=Firebase.firestore
+                db.collection("Utente").document("effggeg").set(user)
+                    .addOnSuccessListener {
+                        Log.d(TAG, "DocumentSnapshot successfully written!")
+                        val intent = Intent(this, MenuActivity::class.java)
+                        startActivity(intent)
+                    }
+                    .addOnFailureListener { e ->
+                        Log.w(TAG, "Error writing document", e)
+                    }
             }
         }
     }
 
 
-    private fun registerUser(email: String, pass: String) {
+   /* private fun registerUser(email: String, pass: String) {
         auth.createUserWithEmailAndPassword(email, pass)
             .addOnCompleteListener(this) { task:Task<AuthResult> ->
                 if (task.isSuccessful) {
@@ -116,7 +138,7 @@ class RegistrationActivity : AppCompatActivity() {
                     Toast.makeText(this, "Registrazione Fallita", Toast.LENGTH_SHORT).show()
                 }
             }
-    }
+    }*/
 
 
     fun showDatePickerDialog(v: View) {
