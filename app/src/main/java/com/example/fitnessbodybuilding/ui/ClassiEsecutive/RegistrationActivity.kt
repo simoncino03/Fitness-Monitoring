@@ -27,6 +27,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import org.w3c.dom.Text
 import java.util.*
+import kotlin.properties.Delegates
 
 
 class RegistrationActivity : AppCompatActivity() {
@@ -43,6 +44,7 @@ class RegistrationActivity : AppCompatActivity() {
     private var emailCorr:Boolean=false
     private var passCorr:Boolean=false
     private var dataCorr:Boolean=false
+    private var documentCount:Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registration)
@@ -63,12 +65,12 @@ class RegistrationActivity : AppCompatActivity() {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }else if(v.id==R.id.btnReg){
-            nome= findViewById<TextView>(R.id.name).text.toString()
-            cognome=findViewById<TextView>(R.id.surname).text.toString()
-            emText=findViewById<TextView>(R.id.emailText)
+            nome= findViewById<EditText>(R.id.name).text.toString()
+            cognome=findViewById<EditText>(R.id.surname).text.toString()
+            emText=findViewById<EditText>(R.id.emailText)
             email=emText.text.toString()
             data=findViewById<EditText>(R.id.editTextText3).text.toString()
-            pass=findViewById<TextView>(R.id.passText).text.toString()
+            pass=findViewById<EditText>(R.id.passText).text.toString()
                 if(nome.isEmpty())
                 {
                     findViewById<TextView>(R.id.name).setError("Il campo non può essere vuoto")
@@ -113,15 +115,21 @@ class RegistrationActivity : AppCompatActivity() {
                     "nome" to nome,
                     "pass" to pass,
                 )
-                val db=Firebase.firestore
-                db.collection("Utente").document("effggeg").set(user)
+                val db = Firebase.firestore
+
+                db.collection("Utente").get ().addOnSuccessListener { querySnapshot ->
+                    documentCount = querySnapshot.size()
+                }
+                val nUtente=documentCount
+
+                db.collection("Utente").document("utente$nUtente").set(user)
                     .addOnSuccessListener {
-                        Log.d(TAG, "DocumentSnapshot successfully written!")
+                        Log.d("RegistrationActivity", "DocumentSnapshot successfully written!")
                         val intent = Intent(this, MenuActivity::class.java)
                         startActivity(intent)
                     }
                     .addOnFailureListener { e ->
-                        Log.w(TAG, "Error writing document", e)
+                        Log.w("RegistrationActivity", "Error writing document", e)
                     }
             }
         }
