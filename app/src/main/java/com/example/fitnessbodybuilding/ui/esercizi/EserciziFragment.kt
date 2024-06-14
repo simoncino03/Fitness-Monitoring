@@ -32,7 +32,7 @@ class EserciziFragment : Fragment() {
 
         return view
     }
-
+//qua popolo la lista
     private fun populateExerciseSpinner() {
         db.collection("Esercizi")
             .get()
