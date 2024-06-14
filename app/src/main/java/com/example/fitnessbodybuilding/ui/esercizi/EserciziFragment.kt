@@ -7,82 +7,59 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ImageView
 import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import com.example.fitnessbodybuilding.R
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.firestore.FirebaseFirestore
 
 class EserciziFragment : Fragment() {
 
+    private lateinit var db: FirebaseFirestore
     private lateinit var exerciseSpinner: Spinner
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_exercise, container, false)
 
+        db = FirebaseFirestore.getInstance()
         exerciseSpinner = view.findViewById(R.id.exerciseSpinner)
 
-
-        loadExercises()
+        // Recupera i dati da Firestore e popola la lista di selezione
+        populateExerciseSpinner()
 
         return view
     }
 
-    private fun loadExercises() {
-        val db = Firebase.firestore
-        db.collection("Esercizi").get()
+    private fun populateExerciseSpinner() {
+        db.collection("Esercizi")
+            .get()
             .addOnSuccessListener { result ->
-                val exercises = mutableListOf<String>()
-
+                val exerciseNames = ArrayList<String>()
                 for (document in result) {
-                    val nomeEsercizio = document.getString("nomeEsercizi")
-                    Log.d(TAG, "Exercise name: $nomeEsercizio")
-                    nomeEsercizio?.let { exercises.add(it) }
-                }
-
-                if (exercises.isEmpty()) {
-                    Log.d(TAG, "No exercises found")
-                }
-
-                context?.let {
-                    ArrayAdapter(
-                        it,
-                        android.R.layout.simple_spinner_item,
-                        exercises
-                    ).also { adapter ->
-                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        exerciseSpinner.adapter = adapter
+                    val exerciseName = document.getString("nomeEsercizio")
+                    if (exerciseName != null) {
+                        exerciseNames.add(exerciseName)
                     }
                 }
 
-                exerciseSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                        // Qui puoi gestire cosa succede quando un esercizio viene selezionato
-                        val selectedExercise = exercises[position]
-                        Log.d(TAG, "Selected: $selectedExercise")
-                    }
+                val adapter = ArrayAdapter(
+                    requireContext(),
+                    android.R.layout.simple_spinner_item,
+                    exerciseNames
+                )
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                exerciseSpinner.adapter = adapter
 
-                    override fun onNothingSelected(parent: AdapterView<*>?) {
-                        // Gestione caso in cui non è stato selezionato nulla
-                    }
-                }
             }
             .addOnFailureListener { exception ->
-                Log.d(TAG, "get failed with ", exception)
+                Log.d(TAG, "Errore nel recupero degli esercizi", exception)
             }
     }
 
     companion object {
-        private const val TAG = "ExerciseFragment"
+        private const val TAG = "EserciziFragment"
     }
 }
