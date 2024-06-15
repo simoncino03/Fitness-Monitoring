@@ -77,6 +77,7 @@ class LoginActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     val intent = Intent(this, MenuActivity::class.java)
+                    MyAppGlobals.globalVariableEmail=email
                     startActivity(intent)
                 } else {
                     try {
@@ -97,4 +98,7 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
     }
+}
+object MyAppGlobals {
+    var globalVariableEmail: String = ""
 }

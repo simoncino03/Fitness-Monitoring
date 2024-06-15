@@ -15,13 +15,13 @@
         android:gravity="center"/>
 
     <Button
-        android:id="@+id/buttonOption1"
+        android:id="@+id/modData"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Modifica Dettagli Data" />
 
     <Button
-        android:id="@+id/buttonOption2"
+        android:id="@+id/viewData"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Visualizza Dettagli Data" />
