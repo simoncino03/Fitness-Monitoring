@@ -23,6 +23,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import org.w3c.dom.Text
@@ -33,82 +35,74 @@ import kotlin.properties.Delegates
 class RegistrationActivity : AppCompatActivity() {
     private lateinit var editTextDate: EditText
     private lateinit var nome: String
-    private lateinit var cognome:String
-    private lateinit var emText:TextView
-    private lateinit var email:String
-    private lateinit var pass:String
-    private lateinit var data:String
-    //private lateinit var auth: FirebaseAuth
-    private var nomCor:Boolean=false
-    private var cognomCor:Boolean=false
-    private var emailCorr:Boolean=false
-    private var passCorr:Boolean=false
-    private var dataCorr:Boolean=false
-    private var documentCount:Int = 0
+    private lateinit var cognome: String
+    private lateinit var emText: TextView
+    private lateinit var email: String
+    private lateinit var pass: String
+    private lateinit var data: String
+    private lateinit var auth: FirebaseAuth
+    private var nomCor: Boolean = false
+    private var cognomCor: Boolean = false
+    private var emailCorr: Boolean = false
+    private var passCorr: Boolean = false
+    private var dataCorr: Boolean = false
+    private var documentCount: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registration)
         editTextDate = findViewById(R.id.editTextText3)
-        val hoAcc=findViewById<TextView>(R.id.hoAcc)
-        val btnReg=findViewById<Button>(R.id.btnReg)
-        //auth = FirebaseAuth.getInstance()
-        hoAcc.setOnClickListener{onClick(it)}
-        btnReg.setOnClickListener{onClick(it)}
+        val hoAcc = findViewById<TextView>(R.id.hoAcc)
+        val btnReg = findViewById<Button>(R.id.btnReg)
+        auth = FirebaseAuth.getInstance()
+        hoAcc.setOnClickListener { onClick(it) }
+        btnReg.setOnClickListener { onClick(it) }
 
 
     }
 
-    fun onClick(v:View)
-    {
-        if(v.id==R.id.hoAcc)
-        {
+    fun onClick(v: View) {
+        if (v.id == R.id.hoAcc) {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
-        }else if(v.id==R.id.btnReg){
-            nome= findViewById<EditText>(R.id.name).text.toString()
-            cognome=findViewById<EditText>(R.id.surname).text.toString()
-            emText=findViewById<EditText>(R.id.emailText)
-            email=emText.text.toString()
-            data=findViewById<EditText>(R.id.editTextText3).text.toString()
-            pass=findViewById<EditText>(R.id.passText).text.toString()
-                if(nome.isEmpty())
-                {
-                    findViewById<TextView>(R.id.name).setError("Il campo non può essere vuoto")
-                }else
-                {
-                    nomCor=true
+        } else if (v.id == R.id.btnReg) {
+            nome = findViewById<EditText>(R.id.name).text.toString()
+            cognome = findViewById<EditText>(R.id.surname).text.toString()
+            emText = findViewById<EditText>(R.id.emailText)
+            email = emText.text.toString()
+            data = findViewById<EditText>(R.id.editTextText3).text.toString()
+            pass = findViewById<EditText>(R.id.passText).text.toString()
+            if (nome.isEmpty()) {
+                findViewById<TextView>(R.id.name).setError("Il campo non può essere vuoto")
+            } else {
+                nomCor = true
 
-                }
-            if(cognome.isEmpty())
-            {
-                findViewById<TextView>(R.id.surname).setError("Il campo non può essere vuoto")
-            }else{                cognomCor=true
             }
-            if(email.isEmpty())
-            {
+            if (cognome.isEmpty()) {
+                findViewById<TextView>(R.id.surname).setError("Il campo non può essere vuoto")
+            } else {
+                cognomCor = true
+            }
+            if (email.isEmpty()) {
                 findViewById<TextView>(R.id.emailText).setError("Il campo non può essere vuoto")
-            }else if(email.contains("@"))
-            {
-                emailCorr=true
-            }else{
+            } else if (email.contains("@")) {
+                emailCorr = true
+            } else {
                 findViewById<TextView>(R.id.emailText).setError("Inserire formato corretto di email")
 
             }
-            if(pass.isEmpty())
-            {
+            if (pass.isEmpty()) {
                 findViewById<TextView>(R.id.passText).setError("Il campo non può essere vuoto")
-                passCorr=true
-            }else{                passCorr=true
+                passCorr = true
+            } else {
+                passCorr = true
             }
-            if(data.isEmpty())
-            {
+            if (data.isEmpty()) {
                 findViewById<EditText>(R.id.editTextText3).setError("Il campo non può essere vuoto")
-            }else{                dataCorr=true
+            } else {
+                dataCorr = true
             }
-            if((nomCor)&&(cognomCor)&&(dataCorr)&&(emailCorr)&&(passCorr))
-            {
-                //registerUser(email, pass)
-                val user= hashMapOf(
+            if ((nomCor) && (cognomCor) && (dataCorr) && (emailCorr) && (passCorr)) {
+                val user = hashMapOf(
                     "cognome" to cognome,
                     "dataNascita" to data,
                     "email" to email,
@@ -117,37 +111,37 @@ class RegistrationActivity : AppCompatActivity() {
                 )
                 val db = Firebase.firestore
 
-                db.collection("Utente").get ().addOnSuccessListener { querySnapshot ->
+                db.collection("Utente").get().addOnSuccessListener { querySnapshot ->
                     documentCount = querySnapshot.size()
+                    val nUtenti = documentCount
+                    db.collection("Utente").document("utente$nUtenti").set(user)
+                    registerUser(email, pass)
                 }
-                val nUtente=documentCount
 
-                db.collection("Utente").document("utente$nUtente").set(user)
-                    .addOnSuccessListener {
-                        Log.d("RegistrationActivity", "DocumentSnapshot successfully written!")
-                        val intent = Intent(this, MenuActivity::class.java)
-                        startActivity(intent)
-                    }
-                    .addOnFailureListener { e ->
-                        Log.w("RegistrationActivity", "Error writing document", e)
-                    }
             }
         }
     }
 
 
-   /* private fun registerUser(email: String, pass: String) {
+    private fun registerUser(email: String, pass: String) {
         auth.createUserWithEmailAndPassword(email, pass)
-            .addOnCompleteListener(this) { task:Task<AuthResult> ->
+            .addOnCompleteListener(this) { task: Task<AuthResult> ->
                 if (task.isSuccessful) {
                     val intent = Intent(this, MenuActivity::class.java)
                     startActivity(intent)
                 } else {
-                    Toast.makeText(this, "Registrazione Fallita", Toast.LENGTH_SHORT).show()
+                    try {
+                        throw task.exception ?: Exception("Unknown exception")
+                    } catch (e: FirebaseAuthUserCollisionException) {
+                        Toast.makeText(this, "L'email è già in uso.", Toast.LENGTH_LONG).show()
+                    } catch (e: FirebaseAuthInvalidCredentialsException) {
+                        Toast.makeText(this, "Formato email non valido. Inserire un'email corretta.", Toast.LENGTH_LONG).show()
+                    }catch (e: Exception) {
+                        Toast.makeText(this, "Registrazione Fallita: ${e.message}", Toast.LENGTH_LONG).show()
+                    }
                 }
             }
-    }*/
-
+    }
 
     fun showDatePickerDialog(v: View) {
         val calendar = Calendar.getInstance()
@@ -156,7 +150,8 @@ class RegistrationActivity : AppCompatActivity() {
         val day = calendar.get(Calendar.DAY_OF_MONTH)
 
 
-        val datePickerDialog = DatePickerDialog(this,
+        val datePickerDialog = DatePickerDialog(
+            this,
             DatePickerDialog.OnDateSetListener { view: DatePicker?, year: Int, month: Int, dayOfMonth: Int ->
                 val date = "$dayOfMonth/${month + 1}/$year"
                 editTextDate.setText(date)
