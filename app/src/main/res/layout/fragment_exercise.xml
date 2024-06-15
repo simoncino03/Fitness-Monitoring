@@ -22,11 +22,10 @@
         android:layout_width="199dp"
         android:layout_height="54dp"
         android:layout_below="@id/textView"
-        android:layout_marginStart="108dp"
-        android:layout_marginTop="56dp"
-        android:layout_marginEnd="104dp"
+        android:layout_marginStart="106dp"
+        android:layout_marginTop="53dp"
+        android:layout_marginEnd="106dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -36,7 +35,7 @@
         android:layout_height="150dp"
         android:layout_below="@id/exerciseSpinner"
         android:layout_marginStart="130dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="48dp"
         android:layout_marginEnd="131dp"
         android:scaleType="centerInside"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,7 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="158dp"
-        android:layout_marginTop="46dp"
+        android:layout_marginTop="28dp"
         android:layout_marginEnd="159dp"
         android:text="Button"
         app:layout_constraintEnd_toEndOf="parent"
@@ -63,6 +62,19 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="177dp"
         android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="142dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="142dp"
+        android:text="Muscoli Interessati:"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/exerciseImage" />
