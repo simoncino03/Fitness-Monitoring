@@ -1,5 +1,6 @@
 package com.example.fitnessbodybuilding.ui.esercizi
-
+import android.app.AlertDialog
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.AsyncTask
@@ -10,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
@@ -27,6 +29,8 @@ class EserciziFragment : Fragment() {
     private lateinit var exerciseSpinner: Spinner
     private lateinit var exerciseImageView: ImageView
     private lateinit var muscle: TextView
+    private lateinit var showDialogButton: Button
+    private var selectedExercise: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,12 +41,48 @@ class EserciziFragment : Fragment() {
         db = FirebaseFirestore.getInstance()
         exerciseSpinner = view.findViewById(R.id.exerciseSpinner)
         exerciseImageView = view.findViewById(R.id.exerciseImage)
-        muscle = view.findViewById(R.id.muscleGroup) // Riferimento al TextView per il gruppo muscolare
+        muscle = view.findViewById(R.id.muscleGroup)
+        showDialogButton = view.findViewById(R.id.button)
 
-        // Recupera i dati da Firestore e popola la lista di selezione
         populateExerciseSpinner()
-
+        showDialogButton.setOnClickListener {
+            showDialog()
+        }
         return view
+    }
+
+    private fun showDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        val inflater = layoutInflater
+        val dialogLayout = inflater.inflate(R.layout.layout_inserimento_scheda, null)
+        builder.setView(dialogLayout)
+
+        val button1: Button = dialogLayout.findViewById(R.id.button5)
+        val button2: Button = dialogLayout.findViewById(R.id.button6)
+        val button3: Button = dialogLayout.findViewById(R.id.button7)
+
+        val dialog = builder.create()
+
+        val clickListener = View.OnClickListener { v ->
+            val scheda = when (v.id) {
+                R.id.button5 -> "Scheda 1"
+                R.id.button6 -> "Scheda 2"
+                R.id.button7 -> "Scheda 3"
+                else -> ""
+            }
+            val intent = Intent(requireContext(), SchedaActivity::class.java).apply {
+                putExtra("SCHEDA", scheda)
+                putExtra("ESERCIZIO", selectedExercise)
+            }
+            startActivity(intent)
+            dialog.dismiss()
+        }
+
+        button1.setOnClickListener(clickListener)
+        button2.setOnClickListener(clickListener)
+        button3.setOnClickListener(clickListener)
+
+        dialog.show()
     }
 
     private fun populateExerciseSpinner() {
@@ -50,12 +90,12 @@ class EserciziFragment : Fragment() {
             .get()
             .addOnSuccessListener { result ->
                 val exerciseNames = ArrayList<String>()
-                val exerciseData = HashMap<String, Map<String, String>>() // Modifica il tipo di dati
+                val exerciseData = HashMap<String, Map<String, String>>()
 
                 for (document in result) {
                     val exerciseName = document.getString("nomeEsercizio")
                     val exerciseImageUrl = document.getString("imageURL")
-                    val muscleGroup = document.getString("gruppoMusc") // Aggiunge il campo gruppo muscolare
+                    val muscleGroup = document.getString("gruppoMusc")
                     if (exerciseName != null && exerciseImageUrl != null && muscleGroup != null) {
                         exerciseNames.add(exerciseName)
                         val exerciseInfo = mapOf(
@@ -81,14 +121,13 @@ class EserciziFragment : Fragment() {
                         position: Int,
                         id: Long
                     ) {
-                        val selectedExercise = parent.getItemAtPosition(position).toString()
+                        selectedExercise = parent.getItemAtPosition(position).toString()
                         val exerciseInfo = exerciseData[selectedExercise]
                         if (exerciseInfo != null) {
                             val imageUrl = exerciseInfo["imageURL"]
                             val muscleGroup = exerciseInfo["gruppoMusc"]
-                            muscle.text = muscleGroup // Imposta il testo nel TextView per il gruppo muscolare
+                            muscle.text = muscleGroup
                             if (imageUrl != null) {
-                                // Carica l'immagine utilizzando AsyncTask
                                 DownloadImageTask(exerciseImageView).execute(imageUrl)
                             }
                         }
@@ -135,4 +174,3 @@ class EserciziFragment : Fragment() {
         private const val TAG = "EserciziFragment"
     }
 }
-
