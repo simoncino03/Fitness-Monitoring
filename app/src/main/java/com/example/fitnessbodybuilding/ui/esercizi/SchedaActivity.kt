@@ -81,10 +81,11 @@ class SchedaActivity : AppCompatActivity() {
                     "riposoSerie" to recupero
                 )
                 val db = Firebase.firestore
-                db.collection("Utente").get().addOnSuccessListener { querySnapshot ->
-                    documentCount = querySnapshot.size()
-                    val nesercizi = documentCount
-                    db.collection("SchedaAllenamento").document("esercizioScheda$nesercizi").set(user)
+                db.collection("SchedaAllenamento").get().addOnSuccessListener { querySnapshot ->
+                    val documentCount = querySnapshot.size()
+                    val newDocumentId = "esercizioScheda${documentCount + 1}"
+
+                    db.collection("SchedaAllenamento").document(newDocumentId).set(user)
                         .addOnSuccessListener {
                             // Mostra pop-up di conferma
                             val builder = AlertDialog.Builder(this)
@@ -95,21 +96,17 @@ class SchedaActivity : AppCompatActivity() {
                                 }
                             builder.create().show()
                         }
-                        .addOnFailureListener { exception ->
-                            // Gestire eventuali errori qui
+                        .addOnFailureListener { e ->
+                            // Gestione dell'errore
                             val builder = AlertDialog.Builder(this)
-                            builder.setMessage("Errore nell'inserimento dei dati: ${exception.message}")
+                            builder.setMessage("Errore durante l'aggiunta dei dati: ${e.message}")
                                 .setPositiveButton("OK", null)
                             builder.create().show()
                         }
-                }.addOnFailureListener { exception ->
-                    // Gestire eventuali errori qui
-                    val builder = AlertDialog.Builder(this)
-                    builder.setMessage("Errore nel recupero dei dati: ${exception.message}")
-                        .setPositiveButton("OK", null)
-                    builder.create().show()
                 }
             }
+
         }
+
     }
 }

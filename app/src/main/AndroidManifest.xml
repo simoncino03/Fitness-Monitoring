@@ -38,6 +38,10 @@
         </activity>
         <activity android:name=".ui.esercizi.SchedaActivity"
             />
+        <activity
+            android:name=".ui.schedaEs.EserciziActivity"
+           />
+
 
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
