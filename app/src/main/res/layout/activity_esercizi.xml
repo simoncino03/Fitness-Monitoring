@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <LinearLayout
-
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -30,15 +29,23 @@
                 app:titleTextColor="#000000" />
 
         </com.google.android.material.appbar.AppBarLayout>
-        <TextView
-            android:id="@+id/textViewInfo"
+
+        <!-- Aggiungi uno ScrollView per il contenuto che deve scorrere -->
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="16dp"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/textViewInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="16dp"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </ScrollView>
 
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
