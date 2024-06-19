@@ -35,7 +35,7 @@ class LoginActivity : AppCompatActivity() {
             email = findViewById<TextView>(R.id.et_email).text.toString()
             pass = findViewById<TextView>(R.id.et_pass).text.toString()
             if (email.isEmpty()) {
-                findViewById<TextView>(R.id.emailText).setError("Il campo non può essere vuoto")
+                findViewById<TextView>(R.id.et_email).setError("Il campo non può essere vuoto")
             } else if (email.contains("@")) {
                 emailCorr = true
             } else {
@@ -99,6 +99,7 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 }
+
 object MyAppGlobals {
     var globalVariableEmail: String = ""
 }

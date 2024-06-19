@@ -14,35 +14,50 @@
         tools:targetApi="31" >
         <activity
             android:name=".ui.calendario.PaginaGiornalieraVisione"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.NavigationBar.NoActionBar"
+            tools:ignore="DiscouragedApi"/>
         <activity
             android:name=".ui.calendario.PaginaGiornalieraModifica"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.NavigationBar.NoActionBar"
+            tools:ignore="DiscouragedApi"/>
         <activity
             android:name=".ui.ClassiEsecutive.RegistrationActivity"
             android:exported="true"
-            android:theme="@style/Theme.Login_Register.NoActionBar" />
+            android:theme="@style/Theme.Login_Register.NoActionBar"
+            android:screenOrientation="portrait"
+            tools:ignore="DiscouragedApi"/>
         <activity
             android:name=".ui.ClassiEsecutive.MenuActivity"
             android:exported="true"
-            android:theme="@style/Theme.NavigationBar.NoActionBar" />
+            android:theme="@style/Theme.NavigationBar.NoActionBar"
+            android:screenOrientation="portrait"
+            tools:ignore="DiscouragedApi"/>
         <activity
             android:name=".ui.ClassiEsecutive.LoginActivity"
             android:exported="true"
-            android:theme="@style/Theme.Login_Register.NoActionBar" >
+            android:theme="@style/Theme.Login_Register.NoActionBar"
+            android:screenOrientation="portrait"
+            tools:ignore="DiscouragedApi">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.esercizi.SchedaActivity"
-            />
+        <activity
+            android:name=".ui.esercizi.SchedaActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.NavigationBar.NoActionBar"
+            tools:ignore="DiscouragedApi"/>
         <activity
             android:name=".ui.schedaEs.EserciziActivity"
-           />
-
-
+            android:theme="@style/Theme.NavigationBar.NoActionBar"
+            android:screenOrientation="portrait"
+            tools:ignore="DiscouragedApi"/>
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
 

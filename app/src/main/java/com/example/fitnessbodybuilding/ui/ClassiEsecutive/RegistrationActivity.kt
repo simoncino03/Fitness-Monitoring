@@ -135,7 +135,13 @@ class RegistrationActivity : AppCompatActivity() {
                     } catch (e: FirebaseAuthUserCollisionException) {
                         Toast.makeText(this, "L'email è già in uso.", Toast.LENGTH_LONG).show()
                     } catch (e: FirebaseAuthInvalidCredentialsException) {
-                        Toast.makeText(this, "Formato email non valido. Inserire un'email corretta.", Toast.LENGTH_LONG).show()
+                        if (e.errorCode == "ERROR_INVALID_EMAIL") {
+                            Toast.makeText(this, "Formato email non valido.", Toast.LENGTH_LONG).show()
+                        } else if (e.errorCode == "ERROR_WRONG_PASSWORD") {
+                            Toast.makeText(this, "Formato Password non corretto. Riprova.", Toast.LENGTH_LONG).show()
+                        } else {
+                            Toast.makeText(this, "Credenziali non valide: ${e.message}", Toast.LENGTH_LONG).show()
+                        }
                     }catch (e: Exception) {
                         Toast.makeText(this, "Registrazione Fallita: ${e.message}", Toast.LENGTH_LONG).show()
                     }

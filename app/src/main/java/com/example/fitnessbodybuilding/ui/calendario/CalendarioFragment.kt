@@ -22,7 +22,8 @@ class  CalendarioFragment : Fragment() {
     private lateinit var cal: CalendarView
     private lateinit var sfondoTot:LinearLayout
     private lateinit var data:String
-
+    private var mese=0
+    private lateinit var meseCorr:String
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,7 +35,14 @@ class  CalendarioFragment : Fragment() {
         text = view.findViewById(R.id.testo)
         cal = view.findViewById(R.id.calend)
         cal.setOnDateChangeListener { _, year, month, dayOfMonth ->
-             data="$dayOfMonth-$month-$year"
+             mese=month+1
+             if(mese<10)
+             {
+                 meseCorr="0$mese"
+             }else{
+                 meseCorr="$mese"
+             }
+             data="$dayOfMonth-$meseCorr-$year"
             // Azione da eseguire quando la data viene modificata
             // In questo esempio, l'azione è vuota
             val dialog = Dialog(requireContext())

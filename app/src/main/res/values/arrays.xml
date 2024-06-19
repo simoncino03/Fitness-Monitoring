@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string-array name="exercise_options">
-        <item>Leg-extention</item>
-        <item>Squats</item>
-        <item>Panca piana</item>
-        <!-- Aggiungi altri esercizi qui -->
-    </string-array>
-</resources>

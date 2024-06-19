@@ -1,11 +1,16 @@
 package com.example.fitnessbodybuilding.ui.schedaEs
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
+import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
 import com.example.fitnessbodybuilding.R
 import com.example.fitnessbodybuilding.ui.ClassiEsecutive.MyAppGlobals
+import com.example.fitnessbodybuilding.ui.calendario.CalendarioFragment
+import com.example.fitnessbodybuilding.ui.calendario.PaginaGiornalieraVisione
 import com.google.firebase.firestore.FirebaseFirestore
 
 class EserciziActivity : AppCompatActivity() {
@@ -15,11 +20,16 @@ class EserciziActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_esercizi)
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        // Imposta la Toolbar come Action Bar
+        setSupportActionBar(toolbar)
 
         textViewInfo = findViewById(R.id.textViewInfo)
 
         // Recupera l'ID della scheda dall'intent
         var schedaId = intent.getStringExtra("SCHEDE_ID")
+
+        supportActionBar?.setTitle("$schedaId")
 
         if (schedaId == "scheda2") {
             schedaId= "idScheda2"
