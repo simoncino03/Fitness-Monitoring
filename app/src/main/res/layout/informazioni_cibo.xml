@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="415dp"
+        android:layout_height="365dp"
+        android:orientation="vertical"
+        android:padding="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="360dp"
+            android:layout_height="40dp"
+            android:text="Cos'Hai Mangiato?"
+            android:textAlignment="center"
+            android:textColor="#002AFF"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/nomeCibo"
+            android:layout_width="360dp"
+            android:layout_height="50dp"
+            android:hint="Digita Qui"
+            android:textAlignment="center"
+            android:textColorHint="@color/gray" />
+
+        <TextView
+            android:id="@+id/textView18"
+            android:layout_width="360dp"
+            android:layout_height="40dp"
+            android:text="In che periodo della Giornata?"
+            android:textAlignment="center"
+            android:textColor="#0028F0"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/momento"
+            android:layout_width="360dp"
+            android:layout_height="50dp"
+            android:hint="Digita Qui"
+            android:textAlignment="center"
+            android:textColorHint="@color/gray" />
+
+        <TextView
+            android:id="@+id/textView20"
+            android:layout_width="360dp"
+            android:layout_height="40dp"
+            android:text="Quanto?"
+            android:textAlignment="center"
+            android:textColor="#0038FF"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/quantita"
+            android:layout_width="360dp"
+            android:layout_height="50dp"
+            android:hint="Digita Qui"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/inserisci"
+            android:layout_width="360dp"
+            android:layout_height="40dp"
+            android:text="Aggiungi"
+            android:textAlignment="center"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -50,7 +50,9 @@ class  CalendarioFragment : Fragment() {
 
             val buttonOption1 = dialog.findViewById<Button>(R.id.modData)
             buttonOption1.setOnClickListener {
-                // Gestione clic su Option 1
+                val intent = Intent(requireContext(), PaginaGiornalieraModifica::class.java)
+                intent.putExtra("Giorno",data)
+                startActivity(intent)
             }
 
             val buttonOption2 = dialog.findViewById<Button>(R.id.viewData)

@@ -40,7 +40,7 @@ class EserciziActivity : AppCompatActivity() {
         }
 
         // Recupera l'email dall'applicazione globale
-        val gmail = MyAppGlobals.globalVariableEmail
+        val gmail = MyAppGlobals.getGlobalVariableEmail()
         if (gmail == null) {
             // Gestisci l'errore: Email globale non presente
             finish()

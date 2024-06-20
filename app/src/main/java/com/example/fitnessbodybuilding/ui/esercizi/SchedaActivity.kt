@@ -71,7 +71,7 @@ class SchedaActivity : AppCompatActivity() {
                 tempo = false
             }
 
-            val gmail = MyAppGlobals.globalVariableEmail
+            val gmail = MyAppGlobals.getGlobalVariableEmail()
             if (ripetizioni && series && tempo) {
                 val user = hashMapOf(
                     "email" to gmail,
