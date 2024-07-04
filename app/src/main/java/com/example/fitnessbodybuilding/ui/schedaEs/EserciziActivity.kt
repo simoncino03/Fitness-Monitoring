@@ -1,6 +1,5 @@
 package com.example.fitnessbodybuilding.ui.schedaEs
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
@@ -9,13 +8,12 @@ import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import com.example.fitnessbodybuilding.R
 import com.example.fitnessbodybuilding.ui.ClassiEsecutive.MyAppGlobals
-import com.example.fitnessbodybuilding.ui.calendario.CalendarioFragment
-import com.example.fitnessbodybuilding.ui.calendario.PaginaGiornalieraVisione
 import com.google.firebase.firestore.FirebaseFirestore
 
 class EserciziActivity : AppCompatActivity() {
 
     private lateinit var textViewInfo: TextView
+    private lateinit var buttonDelete: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +23,7 @@ class EserciziActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         textViewInfo = findViewById(R.id.textViewInfo)
+        buttonDelete = findViewById(R.id.buttonDelete)
 
         // Recupera l'ID della scheda dall'intent
         var schedaId = intent.getStringExtra("SCHEDE_ID")
@@ -33,10 +32,10 @@ class EserciziActivity : AppCompatActivity() {
 
         if (schedaId == "scheda2") {
             schedaId= "idScheda2"
-        }else if(schedaId=="scheda1"){
-            schedaId="idScheda1"
-        }else if(schedaId=="scheda3"){
-            schedaId="idScheda3"
+        } else if (schedaId == "scheda1") {
+            schedaId = "idScheda1"
+        } else if (schedaId == "scheda3") {
+            schedaId = "idScheda3"
         }
 
         // Recupera l'email dall'applicazione globale
@@ -80,6 +79,37 @@ class EserciziActivity : AppCompatActivity() {
                 // Gestisci l'errore durante il recupero degli esercizi
                 Log.e("EserciziActivity", "Errore durante il recupero degli esercizi", exception)
                 textViewInfo.text = "Errore durante il recupero degli esercizi"
+            }
+
+        // Imposta il listener per il bottone di eliminazione
+        buttonDelete.setOnClickListener {
+            if (schedaId != null) {
+                deleteScheda(db, schedaId)
+            }
+        }
+    }
+
+    private fun deleteScheda(db: FirebaseFirestore, schedaId: String) {
+        val schedaRef = db.collection("SchedaAllenamento")
+            .whereEqualTo("idScheda", schedaId)
+
+        // Trova il documento da eliminare
+        schedaRef.get()
+            .addOnSuccessListener { querySnapshot ->
+                for (document in querySnapshot.documents) {
+                    document.reference.delete()
+                        .addOnSuccessListener {
+                            textViewInfo.text = "Scheda eliminata con successo"
+                        }
+                        .addOnFailureListener { e ->
+                            Log.e("EserciziActivity", "Errore durante l'eliminazione della scheda", e)
+                            textViewInfo.text = "Errore durante l'eliminazione della scheda"
+                        }
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.e("EserciziActivity", "Errore durante la ricerca della scheda", e)
+                textViewInfo.text = "Errore durante la ricerca della scheda"
             }
     }
 }
