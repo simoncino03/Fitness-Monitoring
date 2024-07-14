@@ -26,8 +26,10 @@ class LoginActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         val btn = findViewById<Button>(R.id.btnLogin)
         val noAcc = findViewById<TextView>(R.id.noAccount)
+        val psDim=findViewById<TextView>(R.id.pass_dimenticata)
         btn.setOnClickListener { onClick(it) }
         noAcc.setOnClickListener { onClick(it) }
+        psDim.setOnClickListener{onClick(it)}
     }
 
     fun onClick(v: View) {
@@ -40,7 +42,6 @@ class LoginActivity : AppCompatActivity() {
                 emailCorr = true
             } else {
                 findViewById<TextView>(R.id.et_email).setError("Inserire formato corretto di email")
-
             }
             if (pass.isEmpty()) {
                 findViewById<TextView>(R.id.et_pass).setError("Il campo non può essere vuoto")
@@ -55,6 +56,14 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }else if(v.id==R.id.pass_dimenticata)
         {
+            email = findViewById<TextView>(R.id.et_email).text.toString()
+            if (email.isEmpty()) {
+                findViewById<TextView>(R.id.et_email).setError("Il campo non può essere vuoto")
+            } else if (email.contains("@")) {
+                emailCorr = true
+            } else {
+                findViewById<TextView>(R.id.et_email).setError("Inserire formato corretto di email")
+            }
             if(emailCorr)
             {
                 auth.sendPasswordResetEmail(email).addOnCompleteListener {
