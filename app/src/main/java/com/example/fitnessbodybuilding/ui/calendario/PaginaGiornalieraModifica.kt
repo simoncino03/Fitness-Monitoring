@@ -58,10 +58,10 @@ class PaginaGiornalieraModifica : AppCompatActivity() {
                     R.id.button7 -> "3"
                     else -> ""
                 }
-
+                val email=MyAppGlobals.getGlobalVariableEmail()
                 val allenamentoEff = hashMapOf(
                     "dataAll" to dataSelezionata,
-                    "email" to MyAppGlobals.getGlobalVariableEmail(),
+                    "email" to email,
                     "idScheda" to "idScheda$scheda"
                 )
 
@@ -91,8 +91,9 @@ class PaginaGiornalieraModifica : AppCompatActivity() {
 
         }else if(v.id==R.id.btnInd)
         {
-            val intent = Intent(this, CalendarioFragment::class.java)
-            startActivity(intent)
+            finish();
+            //val intent = Intent(this, CalendarioFragment::class.java)
+            //startActivity(intent)
         }
     }
 

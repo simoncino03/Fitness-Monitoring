@@ -37,6 +37,15 @@ class EserciziActivity : AppCompatActivity() {
         } else if (schedaId == "scheda3") {
             schedaId = "idScheda3"
         }
+        //Si può fare anche cosi:
+        //private fun convertSchedaId(schedaId: String?): String? {
+        //    return when (schedaId) {
+        //        "scheda1" -> "idScheda1"
+        //        "scheda2" -> "idScheda2"
+        //        "scheda3" -> "idScheda3"
+        //        else -> null
+        //    }
+        //}
 
         // Recupera l'email dall'applicazione globale
         val gmail = MyAppGlobals.getGlobalVariableEmail()
@@ -48,6 +57,7 @@ class EserciziActivity : AppCompatActivity() {
 
         // Configura Firebase
         val db = FirebaseFirestore.getInstance()
+        //Questa bvariabie contine una query che filtra i risultati nella collezione "SchedaAllenamento"
         val eserciziRef = db.collection("SchedaAllenamento")
             .whereEqualTo("idScheda", schedaId)
 
@@ -59,7 +69,6 @@ class EserciziActivity : AppCompatActivity() {
                     textViewInfo.text = "Nessun esercizio trovato per la scheda con ID: $schedaId"
                     return@addOnSuccessListener
                 }
-
                 // Costruisci il testo per visualizzare gli esercizi
                 val stringBuilder = StringBuilder()
                 for (document in querySnapshot.documents) {

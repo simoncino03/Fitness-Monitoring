@@ -61,6 +61,7 @@ class TimerFragment : Fragment() {
     }
 
     private fun startTimer() {
+        //Questo metodo aggiorna il timer a ogni tick
         countDownTimer = object : CountDownTimer(timeLeftInMillis, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 timeLeftInMillis = millisUntilFinished
@@ -68,10 +69,10 @@ class TimerFragment : Fragment() {
             }
 
             override fun onFinish() {
+                //Quando il timer è finito vengono aggiornate tutte le variabili a schermo
                 timerRunning = false
-                // Aggiungi azioni di completamento del timer, se necessario
-                removePartials() // Rimuovi i tempi parziali quando il timer finisce
-                resetTimer() // Resetta il timer automaticamente quando il tempo scade
+                removePartials() // Rimuovi i tempi parziali
+                resetTimer() // Resetta il timer automaticamente
             }
         }.start()
 
@@ -95,10 +96,10 @@ class TimerFragment : Fragment() {
         removePartials() // Rimuovi i tempi parziali quando si preme il pulsante di reset
     }
 
-    private fun updateTimer() {
+    private fun updateTimer() {//Metodo che mi permette di vedere sullo schermo il timer
         val minutes = (timeLeftInMillis / 1000) / 60
         val seconds = (timeLeftInMillis / 1000) % 60
-
+        //Formatta il timer in base alle impostazioni del telefono tramite il Locale.getDefault
         val timeLeftFormatted =
             String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds)
         timerTextView.text = timeLeftFormatted
@@ -134,9 +135,10 @@ class TimerFragment : Fragment() {
         reversedPartials.addAll(partialTimesQueue.reversed())
 
         // Aggiungi i tempi parziali dalla coda all'adapter
-        reversedPartials.forEach { partialTimesAdapter.add(it) }
+        reversedPartials.forEach { partialTimesAdapter.add(it) }//Visto che la variabile adapter è collegata alla listView
+                                                                //questa istruzione aggiunge il tempo alla coda della listView
 
-        // Aggiorna la lista
+        //Notifica android che la lista è cambiata e quindi deve aggiornare la listview
         partialTimesAdapter.notifyDataSetChanged()
     }
 

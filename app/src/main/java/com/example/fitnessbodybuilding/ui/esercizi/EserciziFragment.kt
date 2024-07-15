@@ -39,12 +39,12 @@ class EserciziFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_exercise, container, false)
 
         db = FirebaseFirestore.getInstance()
-        exerciseSpinner = view.findViewById(R.id.exerciseSpinner)
+        exerciseSpinner = view.findViewById(R.id.exerciseSpinner)//Spinner che serve per creare il menu a tendina
         exerciseImageView = view.findViewById(R.id.exerciseImage)
         muscle = view.findViewById(R.id.muscleGroup)
-        showDialogButton = view.findViewById(R.id.button)
+        showDialogButton = view.findViewById(R.id.button)//Bottone "aggiungi alla scheda"
 
-        populateExerciseSpinner()
+        populateExerciseSpinner()//Con questo metodo viene popolato il menu degli esercizi
         showDialogButton.setOnClickListener {
             showDialog()
         }
@@ -102,15 +102,16 @@ class EserciziFragment : Fragment() {
                             "imageURL" to exerciseImageUrl,
                             "gruppoMusc" to muscleGroup
                         )
-                        exerciseData[exerciseName] = exerciseInfo
+                        exerciseData[exerciseName] = exerciseInfo//Nella posizione corrispondente a exerciseName,aggiungiamo i suoi "attributi"
                     }
                 }
-
+                //Viene creato un adapter per gestire lo spinner
                 val adapter = ArrayAdapter(
                     requireContext(),
                     android.R.layout.simple_spinner_item,
                     exerciseNames
                 )
+                //l'istruzione seguente serve per creare il layout del singolo spinner,interna ad android
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 exerciseSpinner.adapter = adapter
 
@@ -121,8 +122,8 @@ class EserciziFragment : Fragment() {
                         position: Int,
                         id: Long
                     ) {
-                        selectedExercise = parent.getItemAtPosition(position).toString()
-                        val exerciseInfo = exerciseData[selectedExercise]
+                        selectedExercise = parent.getItemAtPosition(position).toString()//Estrae il nome dell'esercizio selezionato
+                        val exerciseInfo = exerciseData[selectedExercise]//in exerciseInfo saranno presenti l'immagine e i muscoli interessati dall'esercizio
                         if (exerciseInfo != null) {
                             val imageUrl = exerciseInfo["imageURL"]
                             val muscleGroup = exerciseInfo["gruppoMusc"]
@@ -153,16 +154,15 @@ class EserciziFragment : Fragment() {
             try {
                 val url = URL(imageUrl)
                 val connection = url.openConnection() as HttpURLConnection
-                connection.doInput = true
-                connection.connect()
-                val input: InputStream = connection.inputStream
-                bitmap = BitmapFactory.decodeStream(input)
+                connection.doInput = true//Indichiamo che useremo la connessione per mandare e riceveere dagti
+                connection.connect()//Si connette all'url
+                val input: InputStream = connection.inputStream//Salva in input l'immagine ricevuta
+                bitmap = BitmapFactory.decodeStream(input)//Questa riga di codice ha il compito din tradurre lo stream ricevuto in un bitmap
             } catch (e: IOException) {
                 e.printStackTrace()
             }
             return bitmap
         }
-
         override fun onPostExecute(result: Bitmap?) {
             result?.let {
                 imageView.setImageBitmap(it)
